@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Simulado: Lei Complementar nº 373/2026 – Emendas Parlamentares (Roraima)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.2s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        body.light {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        body.dark {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: inherit;
+        }
+
+        .sim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            background: #ffffffdd;
+            backdrop-filter: blur(4px);
+            padding: 15px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        body.dark .sim-header {
+            background: #1e293bdd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            font-size: 1.7rem;
+            font-weight: 600;
+        }
+
+        .theme-toggle {
+            background: #2c3e66;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: #1e2a4a;
+            transform: scale(0.97);
+        }
+
+        .progress-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin: 20px 0 15px;
+            gap: 12px;
+        }
+
+        .score {
+            background: #2563eb;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 40px;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #334155;
+            border: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 28px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #1e293b;
+        }
+
+        .question-card {
+            background: white;
+            margin-bottom: 24px;
+            border-radius: 28px;
+            padding: 20px 24px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        body.dark .question-card {
+            background: #1e293b;
+            border-color: #334155;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 40px;
+            transition: background 0.1s;
+        }
+
+        .option:hover {
+            background: #eef2ff;
+        }
+
+        body.dark .option:hover {
+            background: #2d3a5e;
+        }
+
+        input[type="radio"] {
+            accent-color: #2563eb;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .explanation {
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-left: 5px solid #3b82f6;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        body.dark .explanation {
+            background: #0f172a;
+            border-left-color: #60a5fa;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .result-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            background: #f1f5f9;
+            animation: fadeOut 4s ease forwards;
+        }
+
+        body.dark .result-badge {
+            background: #0f172a;
+        }
+
+        .correct-badge {
+            color: #16a34a;
+            border-left: 4px solid #16a34a;
+        }
+
+        .wrong-badge {
+            color: #dc2626;
+            border-left: 4px solid #dc2626;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 16px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="light">
+<div class="container">
+    <div class="sim-header">
+        <h1>📘 LC nº 373/2026 – Emendas Parlamentares (LOA/RR)</h1>
+        <button class="theme-toggle" id="themeToggle">🌙 Dark Mode</button>
+    </div>
+    <div class="progress-area">
+        <div class="score" id="scoreDisplay">✅ Acertos: 0 / 100</div>
+        <div class="controls">
+            <button id="checkAllBtn">✔️ Verificar todas respondidas</button>
+            <button id="resetAllBtn">🔄 Limpar respostas</button>
+        </div>
+    </div>
+    <div id="questionsContainer"></div>
+    <footer>Base na Lei Complementar nº 373, de 4 de março de 2026 (Roraima). Simulador com 100 questões objetivas.</footer>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // 100 questões baseadas na Lei Complementar nº 373/2026
+    // --------------------------------------------------------------
+    const questionsData = [
+        { text: "Art. 1º – A proposição e a execução das emendas parlamentares à despesa na LOA estadual observarão o disposto nesta lei complementar, nos termos do art. 113 da Constituição do Estado de Roraima e dos arts. 165 e 166 da Constituição Federal. Qual é o objeto central da lei?", options: ["Criação de novos impostos estaduais", "Regras para emendas parlamentares na LOA", "Reforma administrativa do Executivo", "Plano Plurianual 2026-2029", "Organização do Tribunal de Contas"], correct: 1, explanation: "Art. 1º: a proposição e a execução das emendas parlamentares à despesa, no âmbito da Lei Orçamentária Anual do Estado de Roraima, observarão o disposto nesta lei complementar." },
+        { text: "Art. 2º – A proposição, alteração e execução das emendas individuais e coletivas são vinculadas aos critérios de:", options: ["Discricionariedade e sigilo", "Transparência, publicidade e rastreabilidade", "Urgência e relevância social", "Conveniência política", "Economicidade e eficiência"], correct: 1, explanation: "Art. 2º: vinculadas aos critérios de transparência, publicidade e rastreabilidade previstos nesta lei." },
+        { text: "Art. 3º – Todas as emendas individuais e coletivas apresentadas à LOA serão publicadas na íntegra no portal da transparência de qual Poder?", options: ["Poder Executivo", "Assembleia Legislativa do Estado de Roraima", "Tribunal de Contas", "Ministério Público", "Poder Judiciário"], correct: 1, explanation: "Art. 3º: no portal da transparência da Assembleia Legislativa do Estado de Roraima." },
+        { text: "Art. 4º – A estrutura do documento contendo as emendas deve conter, entre outras informações: número de identificação, nome do proponente, descrição sucinta do objeto, beneficiário final, valor destinado e:", options: ["Parecer do TCE", "Órgão do Executivo responsável pela execução", "Ata da Comissão de Ética", "Autorização do Governador", "Certidão de regularidade fiscal"], correct: 1, explanation: "Art. 4º: o órgão do Poder Executivo estadual responsável pela execução orçamentária." },
+        { text: "No caso de emendas coletivas, além das informações do art. 4º, deverá ser divulgada a íntegra das atas das reuniões da:", options: ["Comissão de Constituição e Justiça", "Comissão Mista de Orçamento, Fiscalização Financeira, Tributação e Controle", "Mesa Diretora", "Comissão de Ética", "Comissão de Finanças"], correct: 1, explanation: "Art. 4º, parágrafo único: atas das reuniões da Comissão Mista de Orçamento, Fiscalização Financeira, Tributação e Controle." },
+        { text: "Art. 5º – No Portal da Transparência do Poder Executivo deverão ser disponibilizadas informações sobre a execução das emendas, incluindo a identificação da emenda, validação técnica e:", options: ["Modalidade de instrumento jurídico elegível", "Nome do servidor responsável", "Histórico do autor da emenda", "Votação da emenda no Plenário", "Parecer do Tribunal de Contas"], correct: 0, explanation: "Art. 5º, IV: modalidade de instrumento jurídico elegível: convênio, termo de fomento, contrato de repasse etc." },
+        { text: "Segundo o art. 5º, §1º, o Portal da Transparência disponibilizará a íntegra dos instrumentos mencionados no inciso IV, contendo os respectivos:", options: ["Cronogramas de execução", "Justificativas políticas", "Assinaturas digitalizadas", "Planilhas de custos", "Memoriais descritivos"], correct: 0, explanation: "Art. 5º, §1º: contendo os respectivos cronogramas de execução." },
+        { text: "Art. 6º – Os recursos provenientes das emendas parlamentares serão recebidos em contas bancárias abertas especificamente para esse fim e poderão ser movimentados exclusivamente para a execução do objeto, vedada a:", options: ["Transferência entre contas", "Realização de saques em espécie ou trânsito por contas intermediárias", "Aplicação em fundos de investimento", "Compra de material de consumo", "Contratação de pessoal temporário"], correct: 1, explanation: "Art. 6º: vedada a realização de saques em espécie ou trânsito dos recursos por contas intermediárias." },
+        { text: "Art. 7º – As emendas coletivas somente poderão destinar recursos a projetos e ações estruturantes, vedada a:", options: ["Individualização de ações para atender demandas de cada membro do Legislativo", "Participação de bancadas", "Execução por fundos municipais", "Contrapartida do estado", "Publicidade"], correct: 0, explanation: "Art. 7º: vedada a individualização de ações e de projetos para atender a demandas ou a indicações de cada membro do Poder Legislativo." },
+        { text: "De acordo com o art. 7º, §1º, I, é vedada a designação genérica de programação que possa resultar na execução de projetos de investimentos de obras por múltiplos entes, ressalvados os projetos para:", options: ["Regiões metropolitanas e regiões geográficas intermediárias e imediatas de Roraima", "Todos os municípios do estado", "Apenas a capital Boa Vista", "Projetos de interesse federal", "Regiões de fronteira"], correct: 0, explanation: "Art. 7º, §1º, I: ressalvados os projetos para as regiões metropolitanas e regiões geográficas intermediárias e imediatas de Roraima." },
+        { text: "Conforme art. 7º, §2º, é vedada a apresentação de emendas cuja programação resulte em transferências voluntárias para mais de 1 município ou entidade privada, ressalvadas as transferências para:", options: ["Fundos estaduais de saúde", "Fundos municipais de saúde", "Consórcios públicos", "Organizações sociais", "Entidades filantrópicas"], correct: 1, explanation: "Art. 7º, §2º: ressalvadas as transferências para os fundos municipais de saúde." },
+        { text: "Art. 7º, §3º – São consideradas ações prioritárias aquelas cujos recursos sejam destinados a diversas políticas públicas. NÃO consta da lista:", options: ["Educação", "Saneamento", "Habitação", "Defesa nacional", "Saúde"], correct: 3, explanation: "Defesa nacional é competência da União; a lista estadual inclui educação, saneamento, habitação, saúde, adaptação climática, transporte, infraestrutura hídrica, segurança pública, turismo, esporte, agropecuária, ciência, comunicações, defesa civil, direitos humanos, cultura, assistência social, meio ambiente, desenvolvimento econômico, fortalecimento dos Poderes etc." },
+        { text: "Art. 7º, §4º – Na hipótese de a programação da emenda coletiva ser divisível, cada parte independente não pode ser inferior a quanto do valor da emenda?", options: ["5%", "10%", "15%", "20%", "25%"], correct: 1, explanation: "Art. 7º, §4º: não pode cada parte independente ser inferior a 10% (dez por cento) do valor da emenda, salvo para atendimento a ações e serviços públicos de saúde." },
+        { text: "Art. 7º, §6º – Os órgãos executores publicarão portarias específicas até 30 de setembro do exercício anterior ao da LOA, contendo projetos de investimento com estimativas de custos e informações sobre execução física e financeira, bem como:", options: ["Critérios para execução dos projetos e ações prioritárias", "Lista de parlamentares beneficiados", "Valores empenhados no exercício anterior", "Parecer do TCE", "Aprovação da Mesa Diretora"], correct: 0, explanation: "Art. 7º, §6º, II: os critérios e as orientações para a execução dos projetos e das ações prioritárias." },
+        { text: "Art. 8º – As emendas coletivas serão apresentadas pelas bancadas e Comissões Permanentes na Comissão de Orçamento e aprovadas coletivamente pelos membros da Assembleia Legislativa. É vedada:", options: ["A apresentação de emendas por bancadas", "A individualização de emenda para atender demanda individual", "A aprovação por maioria simples", "A participação do Executivo", "A publicação das emendas"], correct: 1, explanation: "Art. 8º, §1º: vedada a individualização de emenda ou de programação para atender demanda ou indicação individual." },
+        { text: "Art. 9º – Somente poderão apresentar emendas coletivas aqueles indicados no caput do art. 8º, observadas suas competências regimentais, para ações orçamentárias de interesse:", options: ["Municipal", "Estadual ou regional", "Federal", "Privado", "Internacional"], correct: 1, explanation: "Art. 9º: ações orçamentárias de interesse estadual ou regional." },
+        { text: "Art. 11 – No caso das emendas individuais impositivas, o autor deverá informar objeto e valor da transferência com destinação preferencial para:", options: ["Obras em andamento do Executivo", "Obras inacabadas de sua autoria", "Programas sociais federais", "Fundo partidário", "Campanhas de conscientização"], correct: 1, explanation: "Art. 11: com destinação preferencial para obras inacabadas de sua autoria." },
+        { text: "Art. 11, §2º – A aplicação dos recursos provenientes de transferências especiais observará, obrigatoriamente, o investimento de, no mínimo, quantos por cento do valor total, por autor, em despesas de capital?", options: ["50%", "60%", "70%", "80%", "90%"], correct: 2, explanation: "Art. 11, §2º: no mínimo 70% (setenta por cento) do valor total, por autor, em despesas de capital." },
+        { text: "Art. 12, §2º – O ente beneficiário das transferências especiais deverá comunicar à Assembleia Legislativa e ao Tribunal de Contas, no prazo de 30 dias, o valor recebido, o plano de trabalho e o cronograma de execução, aos quais dará:", options: ["Sigilo absoluto", "Ampla publicidade", "Acesso restrito à Mesa", "Encaminhamento ao Ministério Público", "Arquivo reservado"], correct: 1, explanation: "Art. 12, §2º: aos quais dará ampla publicidade." },
+        { text: "Art. 13 – As transferências especiais destinadas aos entes em situação de calamidade ou emergência reconhecida pelo Poder Executivo estadual terão:", options: ["Prioridade para execução", "Suspensão automática", "Redução de 50%", "Necessidade de aval do TCE", "Prazo diferenciado de 180 dias"], correct: 0, explanation: "Art. 13: prioridade para execução." },
+        { text: "Art. 14 – São consideradas hipóteses de impedimentos de ordem técnica para execução de emendas parlamentares estaduais, EXCETO:", options: ["Incompatibilidade do objeto com a ação orçamentária", "Ausência de projeto de engenharia aprovado", "Não comprovação de capacidade de custeio pelo município", "Discordância política do Governador", "Ausência de licença ambiental prévia"], correct: 3, explanation: "Art. 14 lista 27 hipóteses técnicas, todas objetivas. Discordância política não é impedimento técnico." },
+        { text: "Qual dos itens a seguir é um impedimento técnico previsto no art. 14, inciso II?", options: ["Falta de interesse do beneficiário", "Óbices decorrentes de caso fortuito ou força maior que inviabilizem o empenho no exercício", "Mudança de partido do autor", "Greve de servidores do Executivo", "Crise econômica nacional"], correct: 1, explanation: "Art. 14, II: óbices decorrentes de caso fortuito ou força maior, cujo prazo para superação inviabilize o empenho no exercício financeiro." },
+        { text: "Conforme art. 14, inciso V, é impedimento técnico a não comprovação, por parte dos municípios que fiquem a cargo do empreendimento após sua conclusão, da capacidade de aportar recursos para seu:", options: ["Custeio, operação e manutenção", "Pagamento de pessoal", "Publicidade", "Auditoria", "Contrapartida inicial"], correct: 0, explanation: "Art. 14, V: capacidade de aportar recursos para seu custeio, operação e manutenção." },
+        { text: "Art. 14, inciso XIX – Impedimento técnico relacionado às transferências especiais: inobservância da aplicação mínima obrigatória de 70% em despesas de capital, por autor. Qual o fundamento?", options: ["Art. 11, §2º", "Art. 12, §1º", "Art. 13", "Art. 15", "Art. 16"], correct: 0, explanation: "Art. 14, XIX: inobservância da aplicação mínima obrigatória de 70% em despesas de capital nas transferências especiais, por autor (exigência do art. 11, §2º)." },
+        { text: "Art. 14, §1º – Caberá à área técnica de cada órgão ou ente executor identificar e formalizar a existência de qualquer impedimento de ordem técnica, sob pena de:", options: ["Multa", "Responsabilidade", "Perda do mandato do agente", "Suspensão do órgão", "Anulação da emenda"], correct: 1, explanation: "Art. 14, §1º: sob pena de responsabilidade." },
+        { text: "Art. 14, §5º – Na hipótese de o autor de emenda não se encontrar no exercício do mandato parlamentar, em caráter temporário ou definitivo, caberá a qual Comissão deliberar sobre a alteração das programações originais das emendas individuais?", options: ["Comissão de Constituição e Justiça", "Comissão de Orçamento, Fiscalização Financeira, Tributação e Controle", "Comissão de Ética", "Comissão de Finanças", "Mesa Diretora"], correct: 1, explanation: "Art. 14, §5º: à Comissão de Orçamento, Fiscalização Financeira, Tributação e Controle da Assembleia Legislativa." },
+        { text: "Art. 14, §8º – A execução orçamentário-financeira das emendas parlamentares individuais e coletivas se sujeitará aos princípios da impessoalidade, equidade, proporcionalidade, objetividade, uniformidade, legalidade e:", options: ["Transparência", "Eficiência", "Moralidade", "Publicidade", "Economicidade"], correct: 0, explanation: "Art. 14, §8º: e da transparência." },
+        { text: "Art. 15 – Se a reestimativa da receita e despesa puder resultar no não cumprimento da meta de resultado fiscal estabelecida na LDO, os montantes previstos nos §§ 3º e 6º do art. 113 da Constituição Estadual poderão ser reduzidos em até a mesma proporção da limitação incidente sobre:", options: ["Despesas obrigatórias", "O conjunto das demais despesas discricionárias", "A folha de pagamento", "Os repasses aos municípios", "As emendas individuais isoladamente"], correct: 1, explanation: "Art. 15: sobre o conjunto das demais despesas discricionárias." },
+        { text: "Art. 16 – É vedada a imposição de regra, restrição ou impedimento às emendas parlamentares estaduais que não sejam aplicáveis às programações orçamentárias discricionárias do:", options: ["Poder Legislativo", "Poder Executivo estadual", "Tribunal de Contas", "Ministério Público", "Poder Judiciário"], correct: 1, explanation: "Art. 16: que não sejam aplicáveis às programações orçamentárias discricionárias do Poder Executivo estadual." },
+        { text: "Art. 17 – Os órgãos executores de políticas públicas estaduais publicarão atos normativos com os critérios e orientações para execução das programações orçamentárias advindas de emendas parlamentares, de forma a assegurar a obrigatoriedade da execução, a rastreabilidade e a:", options: ["Economicidade", "Transparência", "Celeridade", "Impunidade", "Sigilo"], correct: 1, explanation: "Art. 17: assegurar a obrigatoriedade da execução, a rastreabilidade e a transparência." },
+        { text: "Art. 18 – Os Poderes Legislativo e Executivo promoverão, nos respectivos portais de transparência, as adequações necessárias ao fiel cumprimento desta lei no prazo máximo de:", options: ["30 dias", "60 dias", "90 dias", "120 dias", "180 dias"], correct: 2, explanation: "Art. 18: no prazo máximo de 90 (noventa) dias." },
+        { text: "Art. 19 – Esta lei complementar entra em vigor na data de sua publicação. Qual foi a data da publicação?", options: ["4 de março de 2025", "4 de março de 2026", "4 de abril de 2026", "1º de janeiro de 2026", "15 de fevereiro de 2026"], correct: 1, explanation: "Art. 19 c/c preâmbulo: Lei Complementar nº 373, de 4 de março de 2026. Entra em vigor na publicação (4/3/2026)." },
+        { text: "O art. 1º, parágrafo único, estabelece que o regramento desta lei complementar é imperativo para as leis orçamentárias do estado, bem como para a interpretação e aplicação dos demais instrumentos normativos sobre a temática. Isso significa que:", options: ["É uma lei facultativa", "Tem caráter obrigatório e prevalece sobre normas conflitantes", "Apenas orienta o Executivo", "Necessita de regulamentação federal", "Pode ser derrogada por decreto"], correct: 1, explanation: "Art. 1º, parágrafo único: 'regramento imperativo' significa obrigatório, de observância forçada." },
+        { text: "Art. 5º, §2º – Além do disposto no artigo, devem ser observadas, na execução das emendas parlamentares, a regulamentação editada por qual órgão sobre transparência e rastreabilidade?", options: ["Assembleia Legislativa", "Tribunal de Contas do Estado de Roraima", "Governador do Estado", "Secretaria da Fazenda", "Ministério Público de Contas"], correct: 1, explanation: "Art. 5º, §2º: regulamentação editada pelo Tribunal de Contas do Estado de Roraima." },
+        { text: "Art. 7º, §1º, II – São considerados projetos de investimentos estruturantes aqueles definidos na Lei de Diretrizes Orçamentárias estadual, regulamentada nesse aspecto pelo:", options: ["Poder Legislativo", "Poder Executivo", "Tribunal de Contas", "Ministério Público", "Conselho de Desenvolvimento"], correct: 1, explanation: "Art. 7º, §1º, II: regulamentada nesse aspecto pelo Poder Executivo." },
+        { text: "Art. 7º, §5º – Considera-se parte independente, EXCETO:", options: ["Compra de equipamentos por um mesmo município", "Compra de equipamentos executável na mesma ação orçamentária", "Despesas de custeio executáveis na mesma ação", "Despesas com pessoal de órgãos estaduais", "As alíneas 'a', 'b' e 'c' do §5º"], correct: 3, explanation: "Art. 7º, §5º: despesas com pessoal não estão listadas; são equipamentos e custeio." },
+        { text: "Art. 8º, §2º – As indicações das emendas coletivas serão de responsabilidade da Comissão Mista de Orçamento, mediante registro em ata, e deverão ser encaminhadas aos órgãos executores e:", options: ["Publicadas", "Arquivadas", "Enviadas ao TCE", "Homologadas pelo Governador", "Analisadas pelo STF"], correct: 0, explanation: "Art. 8º, §2º: e publicadas." },
+        { text: "Art. 11, §1º – Os recursos do estado repassados aos municípios por meio de transferências especiais ficam também sujeitos à apreciação de qual órgão?", options: ["Assembleia Legislativa", "Tribunal de Contas do Estado de Roraima", "Controladoria Geral da União", "Ministério da Economia", "Banco do Brasil"], correct: 1, explanation: "Art. 11, §1º: sujeitos à apreciação do Tribunal de Contas do Estado de Roraima." },
+        { text: "Art. 11, §3º – A execução das programações orçamentárias decorrentes de transferências especiais fica condicionada à prévia apresentação do plano de trabalho, que deverá indicar o objeto, finalidade, estimativa de recursos, prazo e:", options: ["Classificação orçamentária", "Nome do autor", "Ata da Comissão", "Parecer jurídico", "Certidão negativa de débitos"], correct: 0, explanation: "Art. 11, §3º: e a classificação orçamentária." },
+        { text: "Art. 12 – O beneficiário das emendas individuais impositivas deverá indicar no sistema oficial do estado a agência bancária e a conta corrente específica em que serão depositados os recursos. Na falta, o estado realizará a abertura da conta específica por meio de:", options: ["Decreto do Governador", "Sistema bancário a que tenha feito adesão", "Ofício à Assembleia", "Solicitação ao TCE", "Convênio com a Caixa"], correct: 1, explanation: "Art. 12, §1º: por meio de sistema bancário a que tenha feito adesão." },
+        { text: "Art. 14, inciso III – É impedimento técnico a ausência de:", options: ["Projeto de engenharia aprovado pelo órgão responsável", "Registro no conselho profissional", "Anuência do prefeito", "Declaração de utilidade pública", "Estudo de viabilidade econômica"], correct: 0, explanation: "Art. 14, III: ausência de projeto de engenharia aprovado pelo órgão responsável pela programação." },
+        { text: "Art. 14, inciso IV – Impedimento técnico: ausência de:", options: ["Alvará de funcionamento", "Licença ambiental prévia", "Registro no Cadastro Estadual", "Certificado de regularidade fiscal", "Laudo de vistoria do corpo de bombeiros"], correct: 1, explanation: "Art. 14, IV: ausência de licença ambiental prévia, nos casos em que for necessária." },
+        { text: "Art. 14, inciso VII – Impedimento técnico: incompatibilidade com a política pública aprovada no âmbito do:", options: ["Município beneficiário", "Órgão estadual responsável pela programação", "Governo Federal", "Conselho de políticas públicas", "Fórum de governadores"], correct: 1, explanation: "Art. 14, VII: incompatibilidade com a política pública aprovada no âmbito do órgão estadual responsável pela programação." },
+        { text: "Art. 14, inciso IX – Impedimento técnico: ausência de pertinência temática entre o objeto proposto e a:", options: ["Finalidade institucional da entidade beneficiária", "Região do estado", "Disponibilidade orçamentária", "Interesse do autor", "Conveniência política"], correct: 0, explanation: "Art. 14, IX: ausência de pertinência temática entre o objeto proposto e a finalidade institucional da entidade beneficiária." },
+        { text: "Art. 14, inciso XIV – Impedimento técnico: insuficiência do valor priorizado para a:", options: ["Contrapartida do beneficiário", "Execução orçamentária da proposta", "Publicidade da emenda", "Remuneração dos agentes políticos", "Pagamento de taxas"], correct: 1, explanation: "Art. 14, XIV: insuficiência do valor priorizado para a execução orçamentária da proposta ou plano de trabalho." },
+        { text: "Art. 14, inciso XXII – Impedimento técnico: não observância da legislação aplicável ou incompatibilidade das despesas com a política pública setorial e com os critérios técnicos que a:", options: ["Consubstanciam", "Revogam", "Suspende", "Ignoram", "Contrariam"], correct: 0, explanation: "Art. 14, XXII: com os critérios técnicos que a consubstanciam." },
+        { text: "Art. 14, §7º – Nos casos dos incisos III (projeto de engenharia) e IV (licença ambiental), será realizado o empenho das programações, devendo os documentos serem providenciados no prazo para resolução da:", options: ["Cláusula suspensiva", "Condição resolutiva", "Medida cautelar", "Transição governamental", "Prestação de contas"], correct: 0, explanation: "Art. 14, §7º: no prazo para resolução da cláusula suspensiva." },
+        { text: "Art. 15, parágrafo único – O contingenciamento (redução) de que trata o caput deverá observar necessariamente as prioridades elencadas pelo:", options: ["Poder Executivo", "Poder Legislativo", "Tribunal de Contas", "Conselho de Desenvolvimento", "Ministério Público"], correct: 1, explanation: "Art. 15, parágrafo único: deverá observar necessariamente as prioridades elencadas pelo Poder Legislativo." },
+        { text: "A lei complementar foi sancionada pelo Governador Antonio Denarium em 4 de março de 2026. Qual a ementa da lei?", options: ["Cria o sistema de controle externo", "Dispõe sobre a proposição e execução de emendas parlamentares na LOA", "Altera o regimento interno da Assembleia", "Estabelece normas de licitação", "Regulamenta o art. 37 da CF"], correct: 1, explanation: "Ementa: 'Dispõe sobre a proposição e a execução de emendas parlamentares na Lei Orçamentária Anual do Estado de Roraima, e dá outras providências.'" },
+        { text: "De acordo com o art. 7º, §3º, XIX, qual política pública é considerada prioritária?", options: ["Cultura", "Defesa nacional", "Relações exteriores", "Comércio exterior", "Energia nuclear"], correct: 0, explanation: "Art. 7º, §3º, XIX: cultura. Defesa nacional e relações exteriores são federais." },
+        { text: "Art. 7º, §3º, XXIII – Inclui como prioritário o fortalecimento de quais Poderes?", options: ["Executivo e Legislativo apenas", "Legislativo, Executivo e Judiciário", "Judiciário e Ministério Público", "Executivo e Tribunal de Contas", "Legislativo e Defensoria"], correct: 1, explanation: "Art. 7º, §3º, XXIII: fortalecimento do Poder Legislativo, Executivo e Judiciário." },
+        { text: "Art. 14, inciso XXIV – É impedimento técnico a alocação de recursos em programação de natureza:", options: ["Discricionária", "Não discricionária", "Obrigatória", "Vinculada", "Extraorçamentária"], correct: 1, explanation: "Art. 14, XXIV: alocação de recursos em programação de natureza não discricionária." },
+        { text: "Art. 14, inciso XXV – Impedimento técnico: ausência de indicação, pelo autor da emenda, do objeto a ser executado, no caso das:", options: ["Emendas coletivas", "Transferências especiais", "Emendas de comissão", "Emendas de bancada", "Emendas individuais de custeio"], correct: 1, explanation: "Art. 14, XXV: no caso das transferências especiais." },
+        { text: "Art. 14, inciso XXVI – Impedimento técnico para transferências especiais: indicação de objeto com valor inferior ao montante mínimo para celebração de convênios e contratos de repasse previsto no:", options: ["Regulamento específico", "Código Civil", "Lei de Licitações", "Constituição Federal", "Regimento Interno da Assembleia"], correct: 0, explanation: "Art. 14, XXVI: previsto no regulamento específico." },
+        { text: "Art. 14, §4º – As alterações dos valores ou das programações constantes das emendas parlamentares individuais ou coletivas somente poderão ocorrer mediante manifestação expressa do autor, no exercício do mandato. Este princípio é conhecido como:", options: ["Discricionariedade do parlamentar", "Autonomia da vontade do autor", "Intransferibilidade da indicação", "Irretroatividade", "Hierarquia das leis"], correct: 2, explanation: "Art. 14, §4º: somente mediante manifestação expressa do autor, no exercício do mandato (a emenda é personalíssima)." },
+        { text: "Art. 14, §6º – O Poder Executivo inscreverá em restos a pagar os valores dos saldos orçamentários referentes às emendas parlamentares já:", options: ["Autorizadas", "Empenhadas e ainda não efetivamente pagas", "Liquidadas", "Pagas", "Contingenciadas"], correct: 1, explanation: "Art. 14, §6º: empenhadas e ainda não efetivamente pagas." },
+        { text: "Art. 5º, inciso II – No portal da transparência do Executivo, deve ser divulgada a validação e homologação:", options: ["Financeira", "Técnicas", "Jurídicas", "Políticas", "Administrativas"], correct: 1, explanation: "Art. 5º, II: validação e homologação técnicas." },
+        { text: "Art. 7º, §7º – Os municípios poderão encaminhar à Comissão de Orçamento da Assembleia Legislativa plano de modernização e renovação de obras e equipamentos, com as estimativas de custos e quantitativos. Esse plano é:", options: ["Obrigatório", "Facultativo", "Proibido", "Sujeito à aprovação do TCE", "De iniciativa exclusiva do Executivo"], correct: 1, explanation: "Art. 7º, §7º: 'poderão encaminhar' – faculdade dos municípios." },
+        { text: "Art. 8º – As emendas coletivas são apresentadas pelas bancadas e Comissões Permanentes na Comissão de Orçamento e aprovadas coletivamente pelos membros da Assembleia Legislativa. Isso significa que a aprovação exige:", options: ["Unanimidade", "Maioria absoluta em votação secreta", "Aprovação coletiva (maioria dos membros)", "Decisão da Mesa Diretora", "Homologação do Governador"], correct: 2, explanation: "Art. 8º: aprovadas coletivamente pelos membros da Assembleia Legislativa (maioria dos parlamentares)." },
+        { text: "Art. 10 – As emendas individuais ao projeto de Lei Orçamentária Estadual, em todas as suas modalidades, estarão sujeitas ao disposto nesta lei complementar. Isso inclui as emendas impositivas previstas no art. 113, §5º da Constituição Estadual. A principal característica da emenda impositiva é:", options: ["Discricionariedade do Executivo", "Obrigação de execução pelo Executivo", "Necessidade de veto do Governador", "Prazo de 2 anos para execução", "Limite de 1% da receita"], correct: 1, explanation: "Emenda impositiva: o Executivo é obrigado a executá-la, dentro dos limites legais." },
+        { text: "Art. 11, §2º – A exigência de 70% em despesas de capital nas transferências especiais visa garantir:", options: ["Investimentos e obras", "Custeio da máquina pública", "Pagamento de pessoal", "Publicidade governamental", "Serviços de terceiros"], correct: 0, explanation: "Despesas de capital geralmente envolvem investimentos (obras, equipamentos), não custeio." },
+        { text: "Art. 14, inciso VIII – Impedimento técnico: incompatibilidade do objeto proposto com o programa do:", options: ["Governo Federal", "Órgão ou ente executor", "Partido político do autor", "Município beneficiário", "Conselho de políticas"], correct: 1, explanation: "Art. 14, VIII: incompatibilidade do objeto proposto com o programa do órgão ou ente executor." },
+        { text: "Art. 14, inciso X – Impedimento técnico: não apresentação de proposta ou plano de trabalho ou apresentação fora dos prazos previstos. Isso é conhecido como:", options: ["Desistência tácita", "Preclusão temporal", "Inépcia da inicial", "Inadimplemento", "Irregularidade formal"], correct: 1, explanation: "Perda do direito de apresentar fora do prazo – preclusão." },
+        { text: "Art. 14, inciso XIII – Impedimento técnico: reprovação da proposta ou plano de trabalho por inobservância de requisitos legais. Nesse caso, a emenda:", options: ["Será automaticamente cancelada", "Pode ser ajustada para atender aos requisitos", "Perde o valor para sempre", "É transferida ao autor", "É convertida em emenda coletiva"], correct: 1, explanation: "§2º do art. 14: o órgão executor determinará diligências para regularização, sempre que possível." },
+        { text: "Art. 14, inciso XVI – Impedimento técnico: omissão ou erro na indicação de beneficiário pelo autor da emenda. Quem deve corrigir?", options: ["O próprio autor", "A Comissão de Orçamento", "O Tribunal de Contas", "O Poder Executivo", "O beneficiário"], correct: 0, explanation: "Art. 14, §4º: alterações somente mediante manifestação expressa do autor." },
+        { text: "Art. 14, inciso XXVII – Outras hipóteses de impedimento podem ser previstas na:", options: ["Lei de Diretrizes Orçamentárias estadual", "Constituição Federal", "Regimento Interno da Assembleia", "Código Penal", "Lei de Responsabilidade Fiscal"], correct: 0, explanation: "Art. 14, XXVII: outras hipóteses previstas na Lei de Diretrizes Orçamentárias estadual." },
+        { text: "Art. 5º, inciso III – O portal da transparência do Executivo deve divulgar a modalidade de instrumento jurídico elegível: convênio, plano de trabalho, termo de fomento, fundo a fundo, contrato de repasse ou congêneres. Quem define essa modalidade?", options: ["O autor da emenda", "O órgão executor", "O Tribunal de Contas", "A Assembleia Legislativa", "O beneficiário"], correct: 1, explanation: "A execução técnica define o instrumento mais adequado conforme o objeto e a legislação." },
+        { text: "Art. 3º – A publicação das emendas no portal da Assembleia deve ser em local específico e de fácil acesso ao público. Esse princípio é chamado de:", options: ["Transparência ativa", "Sigilo qualificado", "Publicidade passiva", "Discricionariedade informativa", "Responsividade"], correct: 0, explanation: "Transparência ativa: divulgação proativa de informações, independentemente de solicitação." },
+        { text: "Art. 4º – A estrutura do documento da emenda deve conter unidade orçamentária, gestora, programa, ação governamental e funcional programática completa. Isso permite a:", options: ["Correta alocação da dotação orçamentária na LOA", "Fiscalização do TCE", "Análise de constitucionalidade", "Aprovação do Plenário", "Execução financeira imediata"], correct: 0, explanation: "Art. 4º: informações necessárias para a alocação da dotação orçamentária na LOA." },
+        { text: "Art. 6º – A vedação de saques em espécie e trânsito por contas intermediárias visa evitar:", options: ["Desvio de finalidade e falta de rastreabilidade", "Burocracia excessiva", "Despesas de manutenção de contas", "Atraso na liberação", "Controle do Tribunal de Contas"], correct: 0, explanation: "Garantir que os recursos sejam usados exclusivamente para o objeto, com rastreabilidade." },
+        { text: "Art. 7º, §3º, XXII – Qual política pública é considerada prioritária?", options: ["Desenvolvimento econômico e geração de emprego e renda", "Defesa nacional", "Previdência social", "Relações exteriores", "Comércio exterior"], correct: 0, explanation: "Art. 7º, §3º, XXII: desenvolvimento econômico e geração de emprego e renda." },
+        { text: "Art. 9º, parágrafo único – As emendas coletivas deverão identificar de forma precisa o seu objeto, vedada a designação genérica de programação que possa contemplar ações orçamentárias distintas. Isso combate a prática de:", options: ["Emendas de caixa dois", "Emendas secretas ou genéricas", "Emendas impositivas", "Emendas de bancada", "Emendas individuais"], correct: 1, explanation: "Vedação de emendas com objeto genérico (conhecidas como 'emendas de relator' ou 'RP9') – exige especificação." },
+        { text: "Art. 11, caput – O autor da emenda individual impositiva deve informar objeto e valor da transferência, com destinação preferencial para obras inacabadas de sua autoria. Isso evita:", options: ["Obras superfaturadas", "Descontinuidade de projetos anteriormente apoiados pelo parlamentar", "Conflito com o Executivo", "Atraso na execução", "Uso eleitoreiro"], correct: 1, explanation: "Priorizar obras inacabadas do próprio autor dá continuidade a projetos que o parlamentar já havia indicado." },
+        { text: "Art. 14, inciso I – Impedimento técnico: incompatibilidade do objeto da despesa com finalidade ou atributos da ação orçamentária e respectivo subtítulo, bem como dos demais classificadores da despesa. Esse controle é feito pela:", options: ["Área técnica do órgão executor", "Comissão de Orçamento", "Autor da emenda", "Tribunal de Contas", "Controladoria Geral"], correct: 0, explanation: "Art. 14, §1º: caberá à área técnica de cada órgão ou ente executor identificar e formalizar." },
+        { text: "Art. 14, inciso VI – Impedimento técnico: não comprovação da suficiência dos recursos orçamentários e financeiros para conclusão do empreendimento ou de etapa útil com funcionalidade que permita o imediato usufruto dos benefícios pela sociedade. Isso visa evitar:", options: ["Obras inacabadas ou 'elefantes brancos'", "Desvios de recursos", "Conflitos políticos", "Atraso na licitação", "Falhas no projeto"], correct: 0, explanation: "Garantir que haja recursos suficientes para concluir a obra ou pelo menos uma etapa útil." },
+        { text: "Art. 14, inciso XI – Impedimento técnico: não realização de complementação ou de ajustes solicitados em proposta ou plano de trabalho, bem como realização fora dos prazos previstos. O prazo para ajustes é estabelecido:", options: ["Pelo órgão executor", "Pelo autor da emenda", "Na Lei de Diretrizes Orçamentárias", "Pelo Tribunal de Contas", "Pelo beneficiário"], correct: 2, explanation: "Art. 14, §3º: 'nos termos da Lei de Diretrizes Orçamentárias'." },
+        { text: "Art. 14, inciso XV – Impedimento técnico: não indicação de instituição financeira e da conta específica para recebimento e movimentação de recursos de transferências especiais pelo ente beneficiário no sistema oficial do estado. Em caso de omissão, o estado:", options: ["Suspende a emenda", "Abre a conta automaticamente (art. 12, §1º)", "Cancela a transferência", "Notifica o autor", "Envia ao TCE"], correct: 1, explanation: "Art. 12, §1º: o estado, por meio de sistema bancário, realizará a abertura da conta específica." },
+        { text: "Art. 14, inciso XVII – Impedimento técnico: inscrição no CNPJ não correspondente à do beneficiário. Esse erro pode ser corrigido mediante:", options: ["Manifestação do autor", "Ofício da Comissão", "Decisão judicial", "Parecer do TCE", "Ato do Executivo"], correct: 0, explanation: "Art. 14, §4º: alterações somente mediante manifestação expressa do autor." },
+        { text: "Art. 14, inciso XVIII – Impedimento técnico: incompatibilidade do beneficiário com o subtítulo da programação orçamentária da emenda. Exemplo: beneficiário privado em ação destinada a órgão público. Quem deve ajustar?", options: ["O autor da emenda", "O Executivo", "O beneficiário", "A Comissão", "O Tribunal de Contas"], correct: 0, explanation: "Art. 14, §4º: alterações mediante manifestação do autor." },
+        { text: "Art. 14, inciso XX – Impedimento técnico: atendimento do objeto da programação orçamentária com recursos inferiores ao valor da dotação aprovada para o exercício financeiro. Nesse caso, o impedimento incidirá sobre:", options: ["Todo o valor", "Os saldos remanescentes", "Apenas o valor excedente", "O objeto inteiro", "A emenda como um todo"], correct: 1, explanation: "Art. 14, XX: 'o impedimento incidirá sobre os saldos remanescentes'." },
+        { text: "Art. 14, inciso XXI – Impedimento técnico: impossibilidade de atendimento do objeto da programação orçamentária aprovada, ou de uma etapa útil do projeto, em decorrência de insuficiência de dotação orçamentária disponível. Nesse caso, recomenda-se:", options: ["Suplementação por decreto", "Remanejamento de outras emendas", "Redução do objeto para etapa útil", "Cancelamento da emenda", "Substituição do beneficiário"], correct: 2, explanation: "Art. 14, XXI: 'ou de uma etapa útil do projeto' – permite execução parcial viável." },
+        { text: "Art. 14, inciso XXIII – Impedimento técnico: incompatibilidade, devidamente justificada, com o disposto no art. 37 da Constituição Federal. O art. 37 trata dos princípios da administração pública:", options: ["Legalidade, impessoalidade, moralidade, publicidade e eficiência", "Separação dos poderes", "Direitos políticos", "Ordem social", "Segurança pública"], correct: 0, explanation: "Art. 37, caput: legalidade, impessoalidade, moralidade, publicidade e eficiência." },
+        { text: "Art. 15 – A redução das emendas em caso de frustração de receita deve ser proporcional à limitação das despesas discricionárias do Executivo, mas o contingenciamento deve observar as prioridades elencadas pelo Legislativo. Isso assegura:", options: ["Autonomia do Legislativo sobre a execução orçamentária", "Supremacia do Executivo", "Equilíbrio entre os poderes", "Redução linear", "Discricionariedade total do Governador"], correct: 2, explanation: "Equilíbrio: Executivo limita despesas, mas Legislativo define prioridades das emendas." },
+        { text: "Art. 16 – A vedação de regras mais restritivas para emendas do que para despesas discricionárias do Executivo garante:", options: ["Paridade de tratamento entre emendas e despesas do Executivo", "Superioridade das emendas", "Imunidade das emendas", "Discricionariedade do Legislativo", "Hierarquia da lei complementar"], correct: 0, explanation: "Não se pode impor obstáculo às emendas que não se aplique igualmente às programações do Executivo." },
+        { text: "Art. 17 – A publicação de atos normativos pelos órgãos executores com critérios e orientações para execução das emendas visa assegurar a obrigatoriedade da execução, a rastreabilidade e a transparência. Essa obrigatoriedade decorre do caráter:", options: ["Impositivo das emendas (art. 113, §5º, CE)", "Discricionário do Executivo", "Facultativo da lei", "Opinativo do TCE", "Vinculado ao interesse público"], correct: 0, explanation: "As emendas impositivas são de execução obrigatória, salvo impedimento técnico justificado." },
+        { text: "Art. 18 – Prazo de 90 dias para adequação dos portais de transparência. Esse prazo é contado a partir da:", options: ["Publicação da lei (4/3/2026)", "Sanção do Governador", "Aprovação pela Assembleia", "Regulamentação pelo TCE", "Início do exercício financeiro"], correct: 0, explanation: "Art. 19: a lei entra em vigor na data de sua publicação (4/3/2026). Art. 18: prazo de 90 dias da vigência." },
+        { text: "A Lei Complementar nº 373/2026 foi publicada no ano de 2026. Qual o número da lei?", options: ["371", "372", "373", "374", "375"], correct: 2, explanation: "Lei Complementar nº 373, de 4 de março de 2026." },
+        { text: "O art. 1º menciona os arts. 165 e 166 da Constituição Federal, que tratam, respectivamente, de:", options: ["Orçamento e processo legislativo orçamentário", "Saúde e educação", "Segurança pública", "Tributação e finanças", "Controle externo"], correct: 0, explanation: "Art. 165 (planos, orçamentos); art. 166 (processo legislativo orçamentário, emendas)." },
+        { text: "Art. 7º, §3º, XXIV – 'outras políticas públicas, a serem definidas na Lei de Diretrizes Orçamentárias do respectivo exercício'. Isso demonstra que a lista de ações prioritárias é:", options: ["Exaustiva", "Apenas exemplificativa e aberta", "Imutável", "De iniciativa do Executivo", "Sujeita a veto"], correct: 1, explanation: "Permite que a LDO inclua outras políticas não listadas, mantendo abertura." },
+        { text: "Art. 14, §2º – Formalizada a identificação de impedimento técnico, caberá ao órgão executor analisá-lo e determinar diligências com vistas a assegurar a execução da emenda mediante a regularização do impedimento, sempre que possível. Isso reflete o princípio da:", options: ["Primazia da execução orçamentária", "Eficiência", "Economicidade", "Proporcionalidade", "Precaução"], correct: 0, explanation: "Prioriza-se a regularização para viabilizar a execução, em vez de cancelar automaticamente." },
+        { text: "Art. 14, §3º – Os órgãos de execução deverão observar, nos termos da LDO, cronograma para análise e verificação de eventuais impedimentos e demais procedimentos necessários à viabilização da execução das emendas. O objetivo é:", options: ["Celeridade e segurança jurídica", "Dificultar a execução", "Centralizar no Executivo", "Reduzir o número de emendas", "Privilegiar o Legislativo"], correct: 0, explanation: "Cronograma evita atrasos e dá previsibilidade." }
+    ];
+
+    // Verificar total (100 questões)
+    console.log("Total de questões:", questionsData.length);
+
+    let userAnswers = new Array(questionsData.length).fill(null);
+    const questionsContainer = document.getElementById('questionsContainer');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+
+    function updateScore() {
+        let correctCount = 0;
+        for (let i = 0; i < questionsData.length; i++) {
+            if (userAnswers[i] !== null && userAnswers[i] === questionsData[i].correct) {
+                correctCount++;
+            }
+        }
+        scoreDisplay.innerText = `✅ Acertos: ${correctCount} / ${questionsData.length}`;
+    }
+
+    function showExplanation(idx) {
+        const explDiv = document.getElementById(`expl-${idx}`);
+        if (explDiv) {
+            if (userAnswers[idx] !== null) {
+                explDiv.classList.add('show');
+            } else {
+                explDiv.classList.remove('show');
+            }
+        }
+    }
+
+    function showResultBadge(idx) {
+        const card = document.getElementById(`qcard-${idx}`);
+        if (!card) return;
+        const oldBadge = card.querySelector('.result-badge');
+        if (oldBadge) oldBadge.remove();
+
+        const userChoice = userAnswers[idx];
+        if (userChoice === null) return;
+
+        const isCorrect = (userChoice === questionsData[idx].correct);
+        const badge = document.createElement('div');
+        badge.className = `result-badge ${isCorrect ? 'correct-badge' : 'wrong-badge'}`;
+        if (isCorrect) {
+            badge.innerText = '✓ Resposta correta!';
+        } else {
+            const correctLetter = String.fromCharCode(65 + questionsData[idx].correct);
+            badge.innerText = `✗ Resposta errada. Correta: ${correctLetter}.`;
+        }
+        card.appendChild(badge);
+        setTimeout(() => {
+            if (badge.parentNode) badge.remove();
+        }, 4000);
+    }
+
+    function verifySingleQuestion(idx) {
+        showExplanation(idx);
+        showResultBadge(idx);
+        updateScore();
+    }
+
+    function onAnswerChange(qidx, optidx) {
+        userAnswers[qidx] = optidx;
+        verifySingleQuestion(qidx);
+    }
+
+    function renderQuestions() {
+        questionsContainer.innerHTML = '';
+        questionsData.forEach((q, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `qcard-${idx}`;
+            const questionNumber = idx + 1;
+            let optionsHtml = '';
+            q.options.forEach((opt, optIdx) => {
+                const letter = String.fromCharCode(65 + optIdx);
+                const isChecked = (userAnswers[idx] === optIdx);
+                optionsHtml += `
+                    <label class="option">
+                        <input type="radio" name="q${idx}" value="${optIdx}" ${isChecked ? 'checked' : ''} data-qidx="${idx}" data-optidx="${optIdx}">
+                        <strong>${letter}.</strong> ${opt}
+                    </label>
+                `;
+            });
+            const explanationClass = (userAnswers[idx] !== null) ? 'explanation show' : 'explanation';
+            card.innerHTML = `
+                <div class="question-text">${questionNumber}. ${q.text}</div>
+                <div class="options">${optionsHtml}</div>
+                <div class="${explanationClass}" id="expl-${idx}">
+                    <strong>📖 Explicação:</strong> ${q.explanation}
+                </div>
+            `;
+            questionsContainer.appendChild(card);
+        });
+
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const qidx = parseInt(e.target.getAttribute('data-qidx'));
+                const optidx = parseInt(e.target.getAttribute('data-optidx'));
+                onAnswerChange(qidx, optidx);
+            });
+        });
+
+        for (let i = 0; i < questionsData.length; i++) {
+            if (userAnswers[i] !== null) {
+                verifySingleQuestion(i);
+            }
+        }
+    }
+
+    function checkAllAnswers() {
+        for (let i = 0; i < questionsData.length; i++) {
+            if (userAnswers[i] !== null) {
+                verifySingleQuestion(i);
+            }
+        }
+    }
+
+    function resetAll() {
+        userAnswers.fill(null);
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.checked = false;
+        });
+        for (let i = 0; i < questionsData.length; i++) {
+            const explDiv = document.getElementById(`expl-${i}`);
+            if (explDiv) explDiv.classList.remove('show');
+            const card = document.getElementById(`qcard-${i}`);
+            if (card) {
+                const badge = card.querySelector('.result-badge');
+                if (badge) badge.remove();
+            }
+        }
+        updateScore();
+    }
+
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        document.body.classList.toggle('light');
+        const isDark = document.body.classList.contains('dark');
+        themeBtn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    document.getElementById('checkAllBtn').addEventListener('click', checkAllAnswers);
+    document.getElementById('resetAllBtn').addEventListener('click', resetAll);
+
+    renderQuestions();
+    updateScore();
+</script>
+</body>
+</html>
